@@ -82,3 +82,42 @@ void loadRom(char *filePath, gameboy *console)
   for(int i=0; i<romSize; i++)
     console->cartridge->rom[i] = rom_buffer[i];
 }
+
+void execute(gameboy *console)
+{
+  uint8_t opcode = console->cartridge->rom[console->cpu->PC.WORD];
+
+  switch(opcode)
+  {
+    case 0x00:
+      NOP(console->cpu);
+      printf("NOP\n");
+      console->cycles -= 4;
+    break;
+
+    default:
+      fprintf(stderr, "Unknown opcode: 0x%x\n",(int *) opcode);
+      console->cycles = 0;
+    break;
+  }
+
+}
+
+void run(gameboy *console)
+{
+  console->cycles = 300000;
+  int tmp = 0;
+  for(int i=0x0104; i<= 0x0133; i++)
+  {
+    if(console->cartridge->rom[i] != NintendoLogo[tmp]) {
+      fprintf(stderr, "Nintendo Logo is different\n");
+      exit(1);
+    }
+    tmp++;
+  }
+
+  while(console->cycles > 0)
+  {
+    execute(console);
+  }
+}

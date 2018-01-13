@@ -9,15 +9,7 @@ int main()
   initGameboy(console);
   loadRom("C:\\Users\\Coke\\Desktop\\Gamous\\build\\Debug\\tetris.gb", console);
 
-  int test = 0;
-  for(int i=0; i<2048; i++)
-  {
-    for(int j=0; j<16; j++)
-    {
-      printf("%d ", console->cartridge->rom[test]);
-      test++;
-    }
-  }
+  run(console);
 
   deleteGameboy(console);
   free(console);

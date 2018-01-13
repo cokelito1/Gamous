@@ -31,5 +31,6 @@ typedef struct {
 
 void initCPU(cpu_gameboy *);
 
+void NOP(cpu_gameboy *);
 
 #endif
