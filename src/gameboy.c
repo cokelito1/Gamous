@@ -1,9 +1,15 @@
 #include "gameboy.h"
+
+#include <stdio.h>
+#include <stdint.h>
 #include <stdlib.h>
+#include <stddef.h>
 
 void initGameboy(gameboy *console)
 {
   console->cpu = malloc(sizeof(cpu_gameboy));
+  console->cartridge = malloc(sizeof(CartridgeRomOnly_Gameboy));
+
   initCPU(console->cpu);
 
   console->cpu->main.AF.WORD = 0x01B0;
@@ -54,4 +60,25 @@ void resetGameboy(gameboy *console)
 {
   deleteGameboy(console);
   initGameboy(console);
+}
+
+void loadRom(char *filePath, gameboy *console)
+{
+  uint8_t rom_buffer[0x10000];
+  FILE *rom = fopen(filePath, "rb");
+
+  fseek(rom, 0L, SEEK_END);
+  size_t romSize = ftell(rom);
+  rewind(rom);
+
+  if (romSize > 0x10000)
+  {
+	  fprintf(stderr, "Error: Rom to large for Rom only\n");
+	  exit(1);
+  }
+
+  fread(rom_buffer, sizeof(rom_buffer),1,rom);
+
+  for(int i=0; i<romSize; i++)
+    console->cartridge->rom[i] = rom_buffer[i];
 }
