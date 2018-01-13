@@ -6,6 +6,6 @@ if(UNIX AND NOT APPLE)
 endif()
 
 set(PROJECT_SOURCE_DIR src)
-set(SOURCES ${PROJECT_SOURCE_DIR}/main.c ${PROJECT_SOURCE_DIR}/cpu.c)
+set(SOURCES ${PROJECT_SOURCE_DIR}/main.c ${PROJECT_SOURCE_DIR}/cpu.c ${PROJECT_SOURCE_DIR}/gameboy.c)
 
 add_executable(main ${SOURCES})

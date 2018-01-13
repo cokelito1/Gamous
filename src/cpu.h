@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define MEMORY_SIZE 0x1000
+#define MEMORY_SIZE 0x10000
 
 typedef union {
   uint16_t WORD;
@@ -25,10 +25,11 @@ typedef struct {
 
   uint8_t memory[MEMORY_SIZE];
 
-  uint16_t PC;
-  uint16_t SP;
+  register_gameboy PC;
+  register_gameboy SP;
 }cpu_gameboy;
 
 void initCPU(cpu_gameboy *);
+
 
 #endif

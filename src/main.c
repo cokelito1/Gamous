@@ -1,15 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "cpu.h"
+#include "gameboy.h"
 
 int main()
 {
-  cpu_gameboy *cpu = malloc(sizeof(cpu_gameboy));
-  cpu->main.AF.WORD = 0x1234;
+  gameboy *console = malloc(sizeof(gameboy));
+  initGameboy(console);
 
-  printf("%d %d\n", cpu->main.AF.BYTES.H, cpu->main.AF.BYTES.L);
+  printf("%d %d\n", console->cpu->SP.WORD, console->cpu->SP.WORD);
 
-  free(cpu);
+  deleteGameboy(console);
+  free(console);
   return 0;
 }
